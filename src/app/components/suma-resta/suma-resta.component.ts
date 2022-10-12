@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SumaRestaComponent implements OnInit {
 
+  ej01 = [5 , 7 , 12];
+  ej02 = [16, 9 , 7];
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  generarRespuesta(){
+    
   }
 
 }

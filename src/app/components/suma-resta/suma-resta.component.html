@@ -1,1 +1,18 @@
-<p>suma-resta works!</p>
+<div class="container" style="background-color: #fc5956; margin-top: 20px; border-radius: 50px; padding: 20px;">
+    <h1>1. Sumas y restas</h1>
+    <h3>Seleccioná el resultado correcto de las operaciones</h3>
+    <div class="ejercicios">
+        <h2>{{ej01[0]}} + {{ej01[1]}} = </h2>
+        <button class="opcion" (click)="generarRespuesta()">
+            14
+        </button>
+        <button class="opcion" (click)="generarRespuesta()">
+            {{ej01[2]}}
+        </button>
+        <button class="opcion" (click)="generarRespuesta()">
+            13
+        </button>
+    </div>
+</div>
+
+    
