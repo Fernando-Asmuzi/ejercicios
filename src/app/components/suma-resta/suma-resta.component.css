@@ -55,3 +55,7 @@ h3{
 .opcion:hover{
     background-color: #c93e4f;  
 }
+
+.paginator{
+    text-align: center;
+}
