@@ -59,3 +59,19 @@ h3{
 .paginator{
     text-align: center;
 }
+
+.btn{
+    border-radius: 50px;
+    background-color: #f5ea95;
+    color: #3d1734;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.btn:hover{
+    background-color: #fc8e5b;
+}
+
+.confirmar{
+    align-items: center;
+    text-align: center;
+}
