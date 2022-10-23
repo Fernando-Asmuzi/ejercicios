@@ -1,13 +1,18 @@
 <div class="container-fluid" style="background-color: #3d1734; position: absolute; width: 100%; height: 100%; text-align: center;">
     
     <div class="container" style="background-color: #c93e4f; margin-top: 20px; border-radius: 50px; padding: 20px;">
-        <h1>2. Reconocimiento</h1>
-        <h3>Seleccioná la opción escrita de los números</h3>
+        <h1>1. Sumas y restas</h1>
+        <h3>Seleccioná el resultado correcto de las operaciones</h3>
         
         <div class="ejercicios">
             
             <div class="terminos" *ngFor="let item of ejercicios | paginate: { itemsPerPage: 1, currentPage: p }">
-                <h2>{{item.numero}} = </h2>
+                <div class="suma" *ngIf="item.tipo == true">
+                    <h2>{{item.primer_termino}} + {{item.segundo_termino}} = </h2>
+                </div>
+                <div class="suma" *ngIf="item.tipo == false">
+                    <h2>{{item.primer_termino}} - {{item.segundo_termino}} = </h2>
+                </div>
             </div>
             <div class="opciones" *ngFor="let op of opciones | paginate: { itemsPerPage: 1, currentPage: p }">
                 <button class="opcion" (click)="guardarEleccion(op.op_1)">{{op.op_1}}</button>
@@ -40,12 +45,5 @@
             <pagination-controls (pageChange)="p = $event" (pageChange)="reiniciarResultado()"></pagination-controls>
         </div> 
     </div><br>
-    <button type="submit" class="btn btn-lg" routerLink="/reconocimiento">Siguiente</button>
+    <button type="submit" class="btn btn-lg" routerLink="/conteo">Siguiente</button>
 </div>
-
-
-
-
-
-
-

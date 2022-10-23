@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SumaRestaComponent } from './suma-resta.component';
+import { OperacionesComponent } from './operaciones.component';
 
-describe('SumaRestaComponent', () => {
-  let component: SumaRestaComponent;
-  let fixture: ComponentFixture<SumaRestaComponent>;
+describe('OperacionesComponent', () => {
+  let component: OperacionesComponent;
+  let fixture: ComponentFixture<OperacionesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SumaRestaComponent ]
+      declarations: [ OperacionesComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SumaRestaComponent);
+    fixture = TestBed.createComponent(OperacionesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
