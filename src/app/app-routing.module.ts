@@ -9,9 +9,9 @@ import { ReconocimientoComponent } from './components/reconocimiento/reconocimie
 
 const routes: Routes = [
   {path: '', component: InicioComponent},
-  {path: 'conteo', component: ConteoComponent},
-  {path: 'operaciones', component: OperacionesComponent},
-  {path: 'reconocimiento', component: ReconocimientoComponent}
+  {path: 'conteo/:id', component: ConteoComponent},
+  {path: 'operaciones/:id', component: OperacionesComponent},
+  {path: 'reconocimiento/:id', component: ReconocimientoComponent}
 ];
 
 @NgModule({

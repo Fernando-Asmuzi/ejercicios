@@ -23,6 +23,16 @@ h3{
     text-align: center;
 }
 
+img{
+    width: 150px;
+    height: 150px;
+}
+
+p{
+    display: flex;
+    align-items: center;
+    padding-top: 15px;
+}
 .ejercicios{ 
     padding-left: 30%;
     border-radius: 50px;
@@ -37,7 +47,11 @@ h3{
 
 .opcion{ 
     margin: 10px;
-    border-radius: 15px;
+    width: 50px;
+    height: 50px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
     background-color: #3d1734;
     color: #f5ea95;
     align-items: center;

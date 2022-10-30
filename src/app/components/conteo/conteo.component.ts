@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Sumaresta } from '../../models/suma-resta'
-import { Conteo } from '../../models/conteo'
+import { ConteoImagen } from '../../models/conteoImagen'
+import { AlumnoEjercicio, emptyAlumnoEjercicio } from 'src/app/models/alumno_ejercicio';
+import { interval } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { EjerciciosService } from 'src/app/services/ejercicios.service';
+
 @Component({
   selector: 'app-conteo',
   templateUrl: './conteo.component.html',
@@ -9,74 +14,106 @@ import { Conteo } from '../../models/conteo'
 })
 export class ConteoComponent implements OnInit {
 
-  constructor() { }
-
-  ejercicios: Conteo[] = [];
+  alumno_id: number = 0;
+  ejercicios: ConteoImagen[] = [];
+  resultados: number[] = [];
+  ejercicio_id: number = 3;
   opciones = [
-    {op_1: '', op_2: '', op_3: ''},
-    {op_1: '', op_2: '', op_3: ''},
-    {op_1: '', op_2: '', op_3: ''},
-    {op_1: '', op_2: '', op_3: ''},
-    {op_1: '', op_2: '', op_3: ''}
+    {op_1: 0, op_2: 0, op_3: 0},
+    {op_1: 0, op_2: 0, op_3: 0},
+    {op_1: 0, op_2: 0, op_3: 0},
+    {op_1: 0, op_2: 0, op_3: 0},
+    {op_1: 0, op_2: 0, op_3: 0}
   ];
   respuestas: any = [];
   p: number = 1;
-  resultado: string | undefined = '';
+  resultado: number = 0;
   mensaje: boolean = false;
   confirmar: boolean = false;
+  continuar: boolean = false;
+  correctas: any = [];
+  alu_eje: AlumnoEjercicio = emptyAlumnoEjercicio();
+  tiempo: number = 0;
 
+  porcentaje_total: any;
+
+  constructor(private route: ActivatedRoute, private ejercicioService: EjerciciosService) { }
 
   ngOnInit(): void {
-      this.generarEjercicios();      
+    const obs$ = interval(1000);
+    obs$.subscribe((d) => {
+      this.tiempo = d
+    });
+
+    this.alumno_id = Number(this.route.snapshot.paramMap.get("id"));
+    this.generarEjercicios();    
+    
   }
 
-  generarAleatorio(){
-      return Math.floor(Math.random() * (19 - 10) + 10);
+  generarAleatorio(id: number){
+      let resultado = Math.floor(Math.random() * (14 - 3) + 3)
+      this.resultados[id] = resultado;
+      return "../../../assets/image/reconocimiento/" + resultado + ".png";
   }
 
-  generarLiteral(conteo: number){
-      switch(conteo){
-        case 10: return 'DIEZ';
-        case 11: return 'ONCE';
-        case 12: return 'DOCE';
-        case 13: return 'TRECE';
-        case 14: return 'CATORCE';
-        case 15: return 'QUINCE';
-        case 16: return 'DIECISEIS';
-        case 17: return 'DIECISIETE';
-        case 18: return 'DIECIOCHO';
-        case 19: return 'DIECINUEVE';
-      }
-      return '';
+  generarAleatorioSolo(){
+      return Math.floor(Math.random() * (14 - 3) + 3)
   }
+
+  generarResultado(ejercicio: ConteoImagen){
+      ejercicio.resultado = this.resultados[ejercicio.id_ejercicio]
+  }
+
+  controlarImagen(){
+      let termino: string
+      for (let i=0; i<this.ejercicios.length; i++){
+        termino = this.ejercicios[i].imagen
+        console.log(termino)
+       /* for (let j=0; j<this.ejercicios.length; j++){
+           if( i!=j && this.ejercicios[j].imagen == termino){
+             let cambio = false;
+             this.ejercicios[j].imagen = this.generarAleatorio(this.ejercicios[j].id_ejercicio)
+             while(cambio==false){
+               if(this.ejercicios[j].imagen != termino){
+                 cambio = true;
+               }
+             }
+           }
+       } */
+   }
+  } 
 
   generarEjercicios(){
     this.ejercicios = [
-      {id_ejercicio:0, numero: this.generarAleatorio(), numero_literal: '', correcta: false, respuesta: false },
-      {id_ejercicio:1, numero: this.generarAleatorio(), numero_literal: '', correcta: false, respuesta: false },
-      {id_ejercicio:2, numero: this.generarAleatorio(), numero_literal: '', correcta: false, respuesta: false },
-      {id_ejercicio:3, numero: this.generarAleatorio(), numero_literal: '', correcta: false, respuesta: false },
-      {id_ejercicio:4, numero: this.generarAleatorio(), numero_literal: '', correcta: false, respuesta: false },
+      {id_ejercicio:0, imagen: this.generarAleatorio(0), resultado: 0, correcta: false, respuesta: false },
+      {id_ejercicio:1, imagen: this.generarAleatorio(1), resultado: 0, correcta: false, respuesta: false },
+      {id_ejercicio:2, imagen: this.generarAleatorio(2), resultado: 0, correcta: false, respuesta: false },
+      {id_ejercicio:3, imagen: this.generarAleatorio(3), resultado: 0, correcta: false, respuesta: false },
+      {id_ejercicio:4, imagen: this.generarAleatorio(4), resultado: 0, correcta: false, respuesta: false }, 
     ]
 
+    this.controlarImagen() 
+
     for(let i of this.ejercicios){
-        i.numero_literal = this.generarLiteral(i.numero)
+      this.generarResultado(i) 
     }
+    
+
     this.generarOpciones(this.ejercicios);
   }
 
   generarOpciones(ejercicios: any){
     let cont: number = 0;
     for(let i of this.opciones){
-      this.generarPosiciones(ejercicios[cont].numero_literal, i);
+      this.generarPosiciones(ejercicios[cont].resultado, i);
       cont++;
    }    
   }
 
-  generarPosiciones(resul: string, opc: any){
+  generarPosiciones(resul: number, opc: any){
     let pos: number = 0;
-
     pos = Math.floor(Math.random() * 3);
+
     if(pos == 0){
        opc.op_1 = resul;
        opc.op_2 = this.controlarOpcion(resul);
@@ -93,12 +130,12 @@ export class ConteoComponent implements OnInit {
     }}
   }
 
-  controlarOpcion(resul: string){
-      let opcion: string | undefined = '';
+  controlarOpcion(resul: number){
+      let opcion: number = 0;
       let control: boolean = false;
   
       while(control == false){
-        opcion = this.generarLiteral(this.generarAleatorio())   
+        opcion = this.generarAleatorioSolo()
         if(opcion != resul){
           control = true;
         }
@@ -107,12 +144,12 @@ export class ConteoComponent implements OnInit {
       return opcion;
   }
 
-  controlarOpcionDos(resul: string, opc: string){
-    let opcion: string | undefined = '';
+  controlarOpcionDos(resul: number, opc: number){
+    let opcion: number = 0;
     let control: boolean = false;
     
     while(control == false){
-      opcion = this.generarLiteral(this.generarAleatorio());
+      opcion = this.generarAleatorioSolo();
       if(opcion != resul && opcion != opc){
         control = true;
       }
@@ -122,23 +159,65 @@ export class ConteoComponent implements OnInit {
   }
   
   confirmarEleccion(pagina: number){
-      if(this.ejercicios[pagina-1].numero_literal == this.resultado){
+    let cont: number = 0;
+      if(this.ejercicios[pagina-1].resultado == this.resultado){
           this.ejercicios[pagina-1].correcta = true;
       }
       this.respuestas[pagina-1] = this.resultado;
       this.ejercicios[pagina-1].respuesta = true;
+
+      this.correctas[pagina-1] = this.ejercicios[pagina-1].correcta
+      
+      for(let i of this.correctas){
+         if(i != null){
+            cont++
+         } 
+      }
+      if(cont == 5){
+          this.continuar = true;
+      }
   }
 
-  guardarEleccion(eleccion: string){
+  guardarEleccion(eleccion: number){
       this.resultado = eleccion;
       this.mensaje = true;
       this.confirmar = true;
   }
 
   reiniciarResultado(){
-    this.resultado = '';
+    this.resultado = 0;
     this.mensaje = false;
     this.confirmar = false;
   }
+
+  cargarResultados(){
+    this.alu_eje.alumno_id = this.alumno_id;
+    this.alu_eje.ejercicio_id = this.ejercicio_id
+    this.alu_eje.operacion_1 = this.correctas[0]
+    this.alu_eje.operacion_2 = this.correctas[1]
+    this.alu_eje.operacion_3 = this.correctas[2]
+    this.alu_eje.operacion_4 = this.correctas[3]
+    this.alu_eje.operacion_5 = this.correctas[4]
+    this.alu_eje.porcentaje = this.sacarPorcentaje()
+    this.alu_eje.tiempo = this.tiempo
+    this.alu_eje.realizado = true
+
+    this.ejercicioService.postAlumnoEjercicio(this.alu_eje).subscribe( resp => {});
+
+    this.ejercicioService.getPorcenyajeTotal(this.alumno_id).subscribe( resp => {
+      console.log(resp)
+      //this.porcentaje_total = resp. ;
+    });
+}
+
+sacarPorcentaje(){
+  let porcentaje = 0  
+  for(let i of this.correctas){
+      if(i){
+        porcentaje += 20
+      }
+  }
+    return porcentaje;
+}
 
 }

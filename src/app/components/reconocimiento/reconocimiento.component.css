@@ -1,0 +1,73 @@
+.color1 { color: #f5ea95 };
+.color2 { color: #fc8e5b };
+.color3 { color: #fc5956 };
+.color4 { color: #c93e4f };
+.color5 { color: #3d1734 };
+
+.container{
+    background-color: blue;
+    border-radius: 50px;
+}
+
+h1{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: #f5ea95;
+}
+
+h3{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: #f5ea95;
+}
+.carousel-inner{
+    align-items: center;
+    text-align: center;
+}
+
+.ejercicios{ 
+    padding-left: 30%;
+    border-radius: 50px;
+    height: 200px;
+    display: flex;
+    background-color: #f5ea95;
+    align-items: center;
+    text-align: center;
+    color: #3d1734;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.opcion{ 
+    margin: 10px;
+    border-radius: 15px;
+    background-color: #3d1734;
+    color: #f5ea95;
+    align-items: center;
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans;
+    font-size: x-large;
+    /* padding-top: 15px; */
+    border: #fc5956;
+}
+
+.opcion:hover{
+    background-color: #c93e4f;  
+}
+
+.paginator{
+    text-align: center;
+}
+
+.btn{
+    border-radius: 50px;
+    background-color: #f5ea95;
+    color: #3d1734;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.btn:hover{
+    background-color: #fc8e5b;
+}
+
+.confirmar{
+    align-items: center;
+    text-align: center;
+}

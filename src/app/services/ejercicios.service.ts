@@ -22,4 +22,8 @@ export class EjerciciosService {
   postAlumnoEjercicio(alu_eje: any): Observable<AlumnoEjercicio> {
       return this.http.post<AlumnoEjercicio>(this.apiAlumnos, alu_eje)
   }
+
+  getPorcenyajeTotal(alu_id: number): Observable<any> {
+     return this.http.get<any[]>(this.apiAlumnos+"/porcentaje/"+alu_id)
+  }
 }

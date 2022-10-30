@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { interval, take } from 'rxjs';
+import { Sumaresta } from '../../models/suma-resta';
+import { AlumnoEjercicio, emptyAlumnoEjercicio } from '../../models/alumno_ejercicio';
+import { ActivatedRoute } from "@angular/router";
+import { EjerciciosService } from 'src/app/services/ejercicios.service';
 
-import { Sumaresta } from '../../models/suma-resta'
 
 @Component({
   selector: 'app-operaciones',
@@ -9,8 +13,7 @@ import { Sumaresta } from '../../models/suma-resta'
 })
 export class OperacionesComponent implements OnInit {
 
-  constructor() { }
-
+  alumno_id: number = 0;
   ejercicios: Sumaresta[] = [];
   opciones = [
     {op_1: 0, op_2: 0, op_3: 0},
@@ -24,14 +27,43 @@ export class OperacionesComponent implements OnInit {
   resultado: number = 0;
   mensaje: boolean = false;
   confirmar: boolean = false;
+  alu_eje: AlumnoEjercicio = emptyAlumnoEjercicio();
+  ejercicio_id: number = 1;
+  correctas: any = [];
+  continuar: boolean = false;
+  tiempo: number = 0;
 
+
+  constructor(private route: ActivatedRoute, private ejercicioService: EjerciciosService) { }
 
   ngOnInit(): void {
+
+      const obs$ = interval(1000);
+      obs$.subscribe((d) => {
+        this.tiempo = d
+      });
+
+      this.alumno_id = Number(this.route.snapshot.paramMap.get("id"));
       this.generarEjercicios();      
   }
 
   generarAleatorio(){
       return Math.floor(Math.random() * (10 - 2) + 2);
+  }
+
+  controlarTerminos(){
+      let ter_1: number
+      let ter_2: number
+      for (let i=0; i<this.ejercicios.length; i++){
+          ter_1 = this.ejercicios[i].primer_termino
+          ter_2 = this.ejercicios[i].segundo_termino
+          for (let j=0; j<this.ejercicios.length; j++){
+              if( i!=j && this.ejercicios[j].primer_termino == ter_1 && this.ejercicios[j].segundo_termino == ter_2){
+                this.ejercicios[j].primer_termino = this.generarAleatorio()
+                this.ejercicios[j].segundo_termino = this.generarAleatorio()
+              }
+          }
+      }
   }
 
   generarResultado(ejercicio: any){
@@ -54,6 +86,7 @@ export class OperacionesComponent implements OnInit {
       {id_ejercicio:4, primer_termino: this.generarAleatorio(), segundo_termino: this.generarAleatorio(), resultado: 0, tipo: false, correcta: false, respuesta: false }, 
     ]
 
+    this.controlarTerminos();
     for(let i of this.ejercicios){
        this.generarResultado(i)
     }
@@ -117,11 +150,23 @@ export class OperacionesComponent implements OnInit {
   }
   
   confirmarEleccion(pagina: number){
+      let cont = 0;
       if(this.ejercicios[pagina-1].resultado == this.resultado){
           this.ejercicios[pagina-1].correcta = true;
       }
       this.respuestas[pagina-1] = this.resultado;
       this.ejercicios[pagina-1].respuesta = true;
+
+      this.correctas[pagina-1] = this.ejercicios[pagina-1].correcta
+      
+      for(let i of this.correctas){
+         if(i != null){
+            cont++
+         } 
+      }
+      if(cont == 5){
+          this.continuar = true;
+      }
   }
 
   guardarEleccion(eleccion: number){
@@ -136,5 +181,33 @@ export class OperacionesComponent implements OnInit {
     this.confirmar = false;
   }
 
+  cargarResultados(){
+        this.alu_eje.alumno_id = this.alumno_id;
+        this.alu_eje.ejercicio_id = this.ejercicio_id
+        this.alu_eje.operacion_1 = this.correctas[0]
+        this.alu_eje.operacion_2 = this.correctas[1]
+        this.alu_eje.operacion_3 = this.correctas[2]
+        this.alu_eje.operacion_4 = this.correctas[3]
+        this.alu_eje.operacion_5 = this.correctas[4]
+        this.alu_eje.porcentaje = this.sacarPorcentaje()
+        this.alu_eje.tiempo = this.tiempo
+        this.alu_eje.realizado = true
+
+        this.ejercicioService.postAlumnoEjercicio(this.alu_eje).subscribe( resp => {});
+        
+  }
+
+  sacarPorcentaje(){
+    let porcentaje = 0  
+    for(let i of this.correctas){
+        if(i){
+          porcentaje += 20
+        }
+    }
+      return porcentaje;
+  }
+
 }
+
+
 

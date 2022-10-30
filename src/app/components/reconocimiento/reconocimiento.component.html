@@ -1,1 +1,45 @@
-<p>reconocimiento works!</p>
+<div class="container-fluid" style="background-color: #3d1734; position: absolute; width: 100%; height: 100%; text-align: center;">
+    
+    <div class="container" style="background-color: #c93e4f; margin-top: 20px; border-radius: 50px; padding: 20px;">
+        <h1>2. Reconocimiento</h1>
+        <h3>Seleccioná la opción escrita de los números</h3>
+        
+        <div class="ejercicios">
+            
+            <div class="terminos" *ngFor="let item of ejercicios | paginate: { itemsPerPage: 1, currentPage: p }">
+                <h2>{{item.numero}} = </h2>
+            </div>
+            <div class="opciones" *ngFor="let op of opciones | paginate: { itemsPerPage: 1, currentPage: p }">
+                <button class="opcion" (click)="guardarEleccion(op.op_1)">{{op.op_1}}</button>
+                <button class="opcion" (click)="guardarEleccion(op.op_2)">{{op.op_2}}</button>
+                <button class="opcion" (click)="guardarEleccion(op.op_3)">{{op.op_3}}</button>
+            </div>
+        </div><br>
+        <div *ngIf="ejercicios[p-1].respuesta == true">
+            <div *ngIf="ejercicios[p-1].correcta == true">
+                <h3>Tu elección fue: {{respuestas[p-1]}}</h3>
+                <h3>Tu respuesta es correcta!</h3>
+            </div>
+            <div *ngIf="ejercicios[p-1].correcta == false">
+                <h3>Tu elección fue: {{respuestas[p-1]}}</h3>
+                <h3>Tu respuesta fue incorrecta</h3>
+            </div>    
+        </div>
+        <div class="confirmar" *ngIf="ejercicios[p-1].respuesta == false">
+            <div *ngIf="mensaje == false">
+                <h3>Todavía no elegiste un resultado</h3>
+            </div>
+            <div *ngIf="mensaje == true">
+                <h3>Tu elección fue: {{resultado}}</h3>
+            </div>
+            <div *ngIf="confirmar == true">
+                <button class="btn" id="liveAlertBtn" (click)="confirmarEleccion(p)">Confirmar</button>
+            </div>  
+        </div><br>
+        <div class="paginator">
+            <pagination-controls (pageChange)="p = $event" (pageChange)="reiniciarResultado()"></pagination-controls>
+        </div> 
+    </div><br>
+    <h3 *ngIf="continuar == false">Completa todas las operaciones para pasar al siguiente ejercicio</h3>
+    <button type="submit" class="btn btn-lg" [routerLink]="['/conteo', alumno_id]" (click)="cargarResultados()" *ngIf="continuar == true">Siguiente</button>
+</div>

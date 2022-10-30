@@ -45,5 +45,6 @@
             <pagination-controls (pageChange)="p = $event" (pageChange)="reiniciarResultado()"></pagination-controls>
         </div> 
     </div><br>
-    <button type="submit" class="btn btn-lg" routerLink="/conteo">Siguiente</button>
+    <h3 *ngIf="continuar == false">Completa todas las operaciones para pasar al siguiente ejercicio</h3>
+    <button type="submit" class="btn btn-lg" [routerLink]="['/reconocimiento', alumno_id]" (click)="cargarResultados()" *ngIf="continuar == true">Siguiente</button>
 </div>
