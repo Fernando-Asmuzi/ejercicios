@@ -6,6 +6,8 @@ import { AlumnoEjercicio, emptyAlumnoEjercicio } from 'src/app/models/alumno_eje
 import { interval } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { EjerciciosService } from 'src/app/services/ejercicios.service';
+import { emptyResultado, Resultado } from 'src/app/models/resultado';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-conteo',
@@ -35,7 +37,13 @@ export class ConteoComponent implements OnInit {
   alu_eje: AlumnoEjercicio = emptyAlumnoEjercicio();
   tiempo: number = 0;
 
-  porcentaje_total: any;
+  porcentaje_total: number = 0;
+  tiempo_total: number = 0;
+  agregar_resultado: Resultado = emptyResultado();
+
+  pipe = new DatePipe('en-US');
+  
+
 
   constructor(private route: ActivatedRoute, private ejercicioService: EjerciciosService) { }
 
@@ -204,11 +212,28 @@ export class ConteoComponent implements OnInit {
 
     this.ejercicioService.postAlumnoEjercicio(this.alu_eje).subscribe( resp => {});
 
-    this.ejercicioService.getPorcenyajeTotal(this.alumno_id).subscribe( resp => {
-      console.log(resp)
-      //this.porcentaje_total = resp. ;
-    });
+    this.obtenerTotales()
+  
 }
+
+obtenerTotales(){
+
+  this.agregar_resultado.alu_id = this.alumno_id
+  this.agregar_resultado.fecha = this.pipe.transform(Date.now(), 'yyyy/MM/dd');
+
+  this.ejercicioService.getPorcentajeTotal(this.alumno_id).subscribe( resp => { 
+    this.agregar_resultado.porcentaje_total = Number(resp.rows[0]["SUM(porcentaje)"])
+    this.ejercicioService.getTiempoTotal(this.alumno_id).subscribe( resp => { 
+      this.agregar_resultado.tiempo_total = Number(resp.rows[0]["SUM(tiempo)"])
+   });
+  });
+
+  console.log(this.agregar_resultado)
+
+  this.ejercicioService.postResultado(this.agregar_resultado).subscribe(resp => {});
+
+}
+
 
 sacarPorcentaje(){
   let porcentaje = 0  
