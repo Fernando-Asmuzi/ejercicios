@@ -1,6 +1,6 @@
-<div class="container-fluid" style="background-color: #3d1734; position: absolute; width: 100%; height: 100%; text-align: center;">
+<div class="container-fluid" style="background-color: #fb6f24; position: absolute; width: 100%; height: 100%; text-align: center;">
     
-    <div class="container" style="background-color: #c93e4f; margin-top: 20px; border-radius: 50px; padding: 20px;">
+    <div class="container" style="background-color: #5191c1; margin-top: 20px; border-radius: 50px; padding: 20px;">
         <h1>1. Sumas y restas</h1>
         <h3>Seleccioná el resultado correcto de las operaciones</h3>
         
@@ -46,5 +46,5 @@
         </div> 
     </div><br>
     <h3 *ngIf="continuar == false">Completa todas las operaciones para pasar al siguiente ejercicio</h3>
-    <button type="submit" class="btn btn-lg" [routerLink]="['/reconocimiento', alumno_id]" (click)="cargarResultados()" *ngIf="continuar == true">Siguiente</button>
+    <button type="submit" class="btn final btn-lg" [routerLink]="['/reconocimiento', alumno_id]" (click)="cargarResultados()" *ngIf="continuar == true">Siguiente</button>
 </div>

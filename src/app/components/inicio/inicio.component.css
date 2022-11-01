@@ -1,9 +1,10 @@
 
-.color1 { color: #f5ea95 };
-.color2 { color: #fc8e5b };
-.color3 { color: #fc5956 };
-.color4 { color: #c93e4f };
-.color5 { color: #3d1734 };
+.color1 { color:#fb6f24 };
+.color2 { color:#8ca315 };
+.color3 { color:#5191c1 };
+.color4 { color:#1e6495 };
+.color5 { color:#0a4b75 };
+
 
 .container-fluid{
     position: absolute;
@@ -21,16 +22,16 @@ form {
     box-shadow: 0 5px 10 px -5px rgb(0 0 0 /30%);
     text-align: center;
     padding: 10px;
-    background-color: #c93e4f;
+    background-color: #1e6495;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: large;
-    color: #f5ea95;
+    color: white;
 }
 
 button{
     border-radius: 50px;
-    background-color: #f5ea95;
-    color: #3d1734;
+    background-color: #fb6f24;
+    color: white;
 }
 
 button:hover{

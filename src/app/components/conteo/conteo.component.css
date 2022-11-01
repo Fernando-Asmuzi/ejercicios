@@ -1,8 +1,9 @@
-.color1 { color: #f5ea95 };
-.color2 { color: #fc8e5b };
-.color3 { color: #fc5956 };
-.color4 { color: #c93e4f };
-.color5 { color: #3d1734 };
+
+.color1 { color:#fb6f24 };
+.color2 { color:#8ca315 };
+.color3 { color:#5191c1 };
+.color4 { color:#1e6495 };
+.color5 { color:#0a4b75 };
 
 .container{
     background-color: blue;
@@ -11,12 +12,12 @@
 
 h1{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    color: #f5ea95;
+    color: white;
 }
 
 h3{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    color: #f5ea95;
+    color: white;
 }
 .carousel-inner{
     align-items: center;
@@ -38,10 +39,10 @@ p{
     border-radius: 50px;
     height: 200px;
     display: flex;
-    background-color: #f5ea95;
+    background-color: #1e6495;
     align-items: center;
     text-align: center;
-    color: #3d1734;
+    color: white;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -52,8 +53,8 @@ p{
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
-    background-color: #3d1734;
-    color: #f5ea95;
+    background-color: #fb6f24;
+    color: white;
     align-items: center;
     text-align: center;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans;
@@ -72,15 +73,22 @@ p{
 
 .btn{
     border-radius: 50px;
-    background-color: #f5ea95;
-    color: #3d1734;
+    background-color: #fb6f24;
+    color: white;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .btn:hover{
-    background-color: #fc8e5b;
+    background-color: #c93e4f;
 }
 
+.final{
+    border-radius: 50px;
+    background-color: #1e6495;
+    color: white;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+ 
 .confirmar{
     align-items: center;
     text-align: center;
