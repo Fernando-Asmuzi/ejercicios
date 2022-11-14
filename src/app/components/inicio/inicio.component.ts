@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlumnosService } from 'src/app/services/alumnos.service';
+import { EjerciciosService } from 'src/app/services/ejercicios.service';
 import { Alumno } from '../../models/alumno';
+
 
 
 @Component({
@@ -20,7 +22,7 @@ export class InicioComponent implements OnInit {
     id: new FormControl(0)
   })
   
-  constructor(private alumnosService: AlumnosService) { 
+  constructor(private alumnosService: AlumnosService, private ejerciciosService: EjerciciosService) { 
   }
 
   ngOnInit(): void {

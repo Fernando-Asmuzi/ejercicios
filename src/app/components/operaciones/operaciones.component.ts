@@ -32,6 +32,8 @@ export class OperacionesComponent implements OnInit {
   correctas: any = [];
   continuar: boolean = false;
   tiempo: number = 0;
+  minuto: number = 0;
+  segundo: number = 0;
 
 
   constructor(private route: ActivatedRoute, private ejercicioService: EjerciciosService) { }
@@ -42,6 +44,14 @@ export class OperacionesComponent implements OnInit {
       obs$.subscribe((d) => {
         this.tiempo = d
       });
+
+      setInterval( () => {
+          this.segundo += 1;
+          if(this.segundo == 60) {
+             this.segundo = 0;
+             this.minuto += 1
+          }
+      }, 1000);
 
       this.alumno_id = Number(this.route.snapshot.paramMap.get("id"));
       this.generarEjercicios();      
@@ -182,7 +192,7 @@ export class OperacionesComponent implements OnInit {
   }
 
   cargarResultados(){
-        this.alu_eje.alumno_id = this.alumno_id;
+        this.alu_eje.paciente_id = this.alumno_id;
         this.alu_eje.ejercicio_id = this.ejercicio_id
         this.alu_eje.operacion_1 = this.correctas[0]
         this.alu_eje.operacion_2 = this.correctas[1]

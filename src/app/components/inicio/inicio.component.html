@@ -1,12 +1,33 @@
 
 <div class="container-fluid" style="background-color: #5191c1; position: absolute; width: 100%; height: 100%;">
-    <form [formGroup]="formulario" (ngSubmit)="ingresar()">
+    <!-- <form [formGroup]="formulario" (ngSubmit)="ingresar()">
         <div class="mb-3">
             <label class="form-label">Selecciona tu nombre</label>
             <select class="form-select" aria-label="Default select example" formControlName="id">
-                <option *ngFor="let i of alumnos" [value]="i.id_alumno">{{i.nombre + " " + i.apellido }}</option>
+                <option *ngFor="let i of alumnos" [value]="i.id_paciente">{{i.nombre + " " + i.apellido }}</option>
             </select>
         </div>
         <button type="submit" class="btn" [routerLink]="['/operaciones', this.formulario.value.id]" *ngIf="this.formulario.value.id != 0">Iniciar</button>
-    </form>
+    </form> -->
+
+
+    <div class="table-responsive">
+        <h1>Listado de pacientes</h1><br>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">NOMBRE</th>
+                <th scope="col">APELLIDO</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              <tr *ngFor="let i of alumnos">
+                <td>{{i.nombre}}</td>
+                <td>{{i.apellido}}</td>
+                <td><button class="btn" [routerLink]="['/operaciones', i.id_paciente]">Realizar ejercicios</button></td>
+                <td><button class="btn" [routerLink]="['/resultado', i.id_paciente]">Resultados</button></td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
 </div>

@@ -35,14 +35,16 @@ export class ConteoComponent implements OnInit {
   continuar: boolean = false;
   correctas: any = [];
   alu_eje: AlumnoEjercicio = emptyAlumnoEjercicio();
+  paciente_ejercicio: AlumnoEjercicio = emptyAlumnoEjercicio();
   tiempo: number = 0;
 
   porcentaje_total: number = 0;
-  tiempo_total: number = 0;
+  tiempo_total: Array<AlumnoEjercicio> = [];
   agregar_resultado: Resultado = emptyResultado();
 
   pipe = new DatePipe('en-US');
-  
+  minuto: number = 0;
+  segundo: number = 0;
 
 
   constructor(private route: ActivatedRoute, private ejercicioService: EjerciciosService) { }
@@ -52,6 +54,14 @@ export class ConteoComponent implements OnInit {
     obs$.subscribe((d) => {
       this.tiempo = d
     });
+
+    setInterval( () => {
+      this.segundo += 1;
+      if(this.segundo == 60) {
+         this.segundo = 0;
+         this.minuto += 1
+      }
+  }, 1000);
 
     this.alumno_id = Number(this.route.snapshot.paramMap.get("id"));
     this.generarEjercicios();    
@@ -76,7 +86,7 @@ export class ConteoComponent implements OnInit {
       let termino: string
       for (let i=0; i<this.ejercicios.length; i++){
         termino = this.ejercicios[i].imagen
-        console.log(termino)
+      
        /* for (let j=0; j<this.ejercicios.length; j++){
            if( i!=j && this.ejercicios[j].imagen == termino){
              let cambio = false;
@@ -199,7 +209,7 @@ export class ConteoComponent implements OnInit {
   }
 
   cargarResultados(){
-    this.alu_eje.alumno_id = this.alumno_id;
+    this.alu_eje.paciente_id = this.alumno_id;
     this.alu_eje.ejercicio_id = this.ejercicio_id
     this.alu_eje.operacion_1 = this.correctas[0]
     this.alu_eje.operacion_2 = this.correctas[1]
@@ -218,17 +228,18 @@ export class ConteoComponent implements OnInit {
 
 obtenerTotales(){
 
-  this.agregar_resultado.alu_id = this.alumno_id
+  this.agregar_resultado.pac_id = this.alumno_id
   this.agregar_resultado.fecha = this.pipe.transform(Date.now(), 'yyyy/MM/dd');
 
-  this.ejercicioService.getPorcentajeTotal(this.alumno_id).subscribe( resp => { 
-    this.agregar_resultado.porcentaje_total = Number(resp.rows[0]["SUM(porcentaje)"])
-    this.ejercicioService.getTiempoTotal(this.alumno_id).subscribe( resp => { 
-      this.agregar_resultado.tiempo_total = Number(resp.rows[0]["SUM(tiempo)"])
-   });
-  });
+  this.ejercicioService.getEjercicioPaciente(this.alumno_id).subscribe( resp => {
+    this.paciente_ejercicio = resp.rows
+    
+    /* for(let i of this.paciente_ejercicio){
+      this.tiempo_total += i.tiempo;
+      this.porcentaje_total += i.porcentaje
+    } */
 
-  console.log(this.agregar_resultado)
+});
 
   this.ejercicioService.postResultado(this.agregar_resultado).subscribe(resp => {});
 

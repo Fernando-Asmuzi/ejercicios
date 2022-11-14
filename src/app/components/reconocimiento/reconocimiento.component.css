@@ -46,8 +46,13 @@ h3{
     font-size: x-large;
     /* padding-top: 15px; */
     border: #fc5956;
+    font-size: xx-large;
+    font-weight: bold;
 }
 
+h4{
+    color: white;
+}
 .opcion:hover{
     background-color: #c93e4f;  
 }
