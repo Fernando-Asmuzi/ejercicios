@@ -1,12 +1,17 @@
-export class Alumno{
-    id_alumno: number;
+export interface Alumno{
+    id_paciente: number;
     nombre: string;
     apellido: string;
-
-    constructor(id: number, nom: string, ape: string){
-            this.id_alumno = id;
-            this.nombre = nom;
-            this.apellido = ape;
-    }
+    edad: number;
+    edad_mental: number;
 }
+
+export const emptyAlumno = (): Alumno => ({
+    id_paciente: 0,
+    nombre: '',
+    apellido: '',
+    edad: 0,
+    edad_mental: 0,
+})
+
 

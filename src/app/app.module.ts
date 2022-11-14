@@ -12,6 +12,7 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { OperacionesComponent } from './components/operaciones/operaciones.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ResultadosComponent } from './components/resultados/resultados.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ConteoComponent,
     InicioComponent,
     DashboardComponent,
-    OperacionesComponent
+    OperacionesComponent,
+    ResultadosComponent
   ],
   imports: [
     BrowserModule,

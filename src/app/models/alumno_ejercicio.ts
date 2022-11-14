@@ -1,18 +1,18 @@
 export interface AlumnoEjercicio{
-    alumno_id: number;
+    paciente_id: number;
     ejercicio_id: number;
-    operacion_1: boolean;
-    operacion_2: boolean;
-    operacion_3: boolean;
-    operacion_4: boolean;
-    operacion_5: boolean;   
+    operacion_1: any;
+    operacion_2: any;
+    operacion_3: any;
+    operacion_4: any;
+    operacion_5: any;   
     porcentaje: number;
     tiempo: number;
     realizado: boolean;
 }
 
 export const emptyAlumnoEjercicio = (): AlumnoEjercicio => ({
-    alumno_id: 0,
+    paciente_id: 0,
     ejercicio_id: 0,
     operacion_1: false,
     operacion_2: false,

@@ -16,11 +16,16 @@ const cudOptions = {
 export class AlumnosService {
 
   private urlBase = environment.url_servicios_base;
-  private apiAlumnos = this.urlBase + '/api/inicio';
+  private apiAlumnos = this.urlBase + '/api';
 
   constructor(public http: HttpClient) { }
 
   getAlumnos(): Observable<any> {
      return this.http.get<Alumno[]>(this.apiAlumnos, cudOptions)
   }
+
+  getAlumnoId(id: any): Observable<any> {
+    return this.http.get<Alumno>(this.apiAlumnos+'/paciente/'+id)
+  }
+
 }

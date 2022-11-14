@@ -5,8 +5,6 @@ import { environment } from 'src/environments/environment';
 import { AlumnoEjercicio } from '../models/alumno_ejercicio';
 import { Resultado, emptyResultado } from '../models/resultado';
 
-
-
 const cudOptions = {
   headers: new HttpHeaders ({'Content-Type': 'application/json'}),
 }
@@ -17,7 +15,7 @@ const cudOptions = {
 export class EjerciciosService {
 
   private urlBase = environment.url_servicios_base;
-  private apiAlumnos = this.urlBase + '/api/inicio';
+  private apiAlumnos = this.urlBase + '/api';
 
   constructor(public http: HttpClient) { }
 
@@ -33,7 +31,11 @@ export class EjerciciosService {
      return this.http.get<Number>(this.apiAlumnos+"/porcentaje/"+alu_id)
   }
 
-  getTiempoTotal(alu_id: number): Observable<any> {
-    return this.http.get<Number>(this.apiAlumnos+"/tiempo/"+alu_id)
+  getTiempoTotal(alu_id: number): Observable<AlumnoEjercicio[]> {
+    return this.http.get<AlumnoEjercicio[]>(this.apiAlumnos+"/tiempo/"+alu_id)
  }
+
+  getEjercicioPaciente(paciente_id: any): Observable<any>{
+     return this.http.get<AlumnoEjercicio[]>(this.apiAlumnos+"/resultado/ejercicio/"+paciente_id, cudOptions)
+  }
 }
