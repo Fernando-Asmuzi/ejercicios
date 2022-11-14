@@ -43,7 +43,6 @@ export class ResultadosComponent implements OnInit {
              this.porcentaje_promedio += i.porcentaje
            }
 
-           console.log(this.tiempo_total);
     });
   
   }
