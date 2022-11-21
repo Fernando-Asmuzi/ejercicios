@@ -9,6 +9,7 @@ export interface AlumnoEjercicio{
     porcentaje: number;
     tiempo: number;
     realizado: boolean;
+    intento: number;
 }
 
 export const emptyAlumnoEjercicio = (): AlumnoEjercicio => ({
@@ -21,5 +22,6 @@ export const emptyAlumnoEjercicio = (): AlumnoEjercicio => ({
     operacion_5: false,   
     porcentaje: 0,
     tiempo: 0,
-    realizado: false
+    realizado: false,
+    intento: 0
 })

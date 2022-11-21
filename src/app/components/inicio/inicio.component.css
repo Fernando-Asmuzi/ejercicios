@@ -39,7 +39,14 @@ button:hover{
 }
 
 .table-responsive{
+    background-color: #E0E0C4;
     margin-top: 5%;
     font-size: x-large;
     padding: 10px;
+    border-radius: 30px;
+    
+}
+
+.table{
+    text-align: center;
 }

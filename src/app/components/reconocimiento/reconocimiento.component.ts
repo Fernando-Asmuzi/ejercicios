@@ -34,6 +34,8 @@ export class ReconocimientoComponent implements OnInit {
   tiempo: number = 0;
   minuto: number = 0;
   segundo: number = 0;
+  paciente_ejercicio: Array<AlumnoEjercicio> = [];
+  intento: number = 0;
   
   constructor(private route: ActivatedRoute, private ejercicioService: EjerciciosService) { }
 
@@ -52,8 +54,18 @@ export class ReconocimientoComponent implements OnInit {
       }, 1000);
 
       this.alumno_id = Number(this.route.snapshot.paramMap.get("id"));
+
+      this.ejercicioService.getEjercicioPaciente(this.alumno_id).subscribe( resp => {
+        this.paciente_ejercicio = resp.rows
+             for(let i of this.paciente_ejercicio){
+                  if(i.ejercicio_id == this.ejercicio_id && i.intento > this.intento){
+                        this.intento = i.intento
+                  }  
+             }
+      });
      
-      this.generarEjercicios();      
+      this.generarEjercicios(); 
+      
   }
 
   generarAleatorio(){
@@ -212,6 +224,7 @@ export class ReconocimientoComponent implements OnInit {
     this.alu_eje.porcentaje = this.sacarPorcentaje()
     this.alu_eje.tiempo = this.tiempo
     this.alu_eje.realizado = true
+    this.alu_eje.intento = (this.intento+=1)
 
     this.ejercicioService.postAlumnoEjercicio(this.alu_eje).subscribe( resp => {});
 }

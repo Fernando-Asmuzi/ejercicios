@@ -13,13 +13,14 @@
 
     <div class="table-responsive">
         <h1>Listado de pacientes</h1><br>
-        <table class="table">
+        <table class="table table-striped">
             <thead>
               <tr>
                 <th scope="col">Nombre</th>
                 <th scope="col">Apellido</th>
                 <th scope="col">Edad</th>
                 <th scope="col">Edad mental</th>
+                <th scope="col">Intentos realizados</th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -28,6 +29,7 @@
                 <td>{{i.apellido}}</td>
                 <td>{{i.edad}}</td>
                 <td>{{i.edad_mental}}</td>
+                <td></td>
                 <td><button class="btn" [routerLink]="['/operaciones', i.id_paciente]">Realizar ejercicios</button></td>
                 <td><button class="btn" [routerLink]="['/resultado', i.id_paciente]">Resultados</button></td>
               </tr>

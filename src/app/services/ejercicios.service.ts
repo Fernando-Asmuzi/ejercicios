@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AlumnoEjercicio } from '../models/alumno_ejercicio';
 import { Resultado, emptyResultado } from '../models/resultado';
+import { Ejercicio, emptyEjercicio } from '../models/ejercicio';
 
 const cudOptions = {
   headers: new HttpHeaders ({'Content-Type': 'application/json'}),
@@ -27,15 +28,16 @@ export class EjerciciosService {
     return this.http.post<Resultado>(this.apiAlumnos+"/resultado/", resultado)
   }
 
-  getPorcentajeTotal(alu_id: number): Observable<any> {
-     return this.http.get<Number>(this.apiAlumnos+"/porcentaje/"+alu_id)
-  }
-
-  getTiempoTotal(alu_id: number): Observable<AlumnoEjercicio[]> {
-    return this.http.get<AlumnoEjercicio[]>(this.apiAlumnos+"/tiempo/"+alu_id)
- }
-
   getEjercicioPaciente(paciente_id: any): Observable<any>{
      return this.http.get<AlumnoEjercicio[]>(this.apiAlumnos+"/resultado/ejercicio/"+paciente_id, cudOptions)
   }
+
+  getEjercicios(): Observable<any>{
+    return this.http.get<Ejercicio[]>(this.apiAlumnos+"/ejercicio", cudOptions)
+  }
+
+  getResultadoId(paciente_id: any): Observable<any>{
+    return this.http.get<Resultado[]>(this.apiAlumnos+"/total/"+paciente_id, cudOptions)
+  }
+
 }

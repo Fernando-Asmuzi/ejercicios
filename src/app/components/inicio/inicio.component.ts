@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlumnoEjercicio } from 'src/app/models/alumno_ejercicio';
 import { AlumnosService } from 'src/app/services/alumnos.service';
 import { EjerciciosService } from 'src/app/services/ejercicios.service';
 import { Alumno } from '../../models/alumno';
@@ -14,6 +15,8 @@ import { Alumno } from '../../models/alumno';
 export class InicioComponent implements OnInit {
 
   alumnos: Array<Alumno> = [];
+  ejercicios: Array<AlumnoEjercicio> = [];
+  intentos: number[] = [];
 
   default: number = 0;
   id: number = 0;
@@ -38,5 +41,4 @@ export class InicioComponent implements OnInit {
           this.alumnos = resp.rows;
       });
   }
-
 }

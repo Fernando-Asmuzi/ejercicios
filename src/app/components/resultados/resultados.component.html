@@ -1,48 +1,132 @@
-<div class="container-fluid" style="background-color: #5191c1; position: absolute; width: 100%; height: 100%;">
-    <!-- <form [formGroup]="formulario" (ngSubmit)="ingresar()">
-        <div class="mb-3">
-            <label class="form-label">Selecciona tu nombre</label>
-            <select class="form-select" aria-label="Default select example" formControlName="id">
-                <option *ngFor="let i of alumnos" [value]="i.id_paciente">{{i.nombre + " " + i.apellido }}</option>
-            </select>
-        </div>
-        <button type="submit" class="btn" [routerLink]="['/operaciones', this.formulario.value.id]" *ngIf="this.formulario.value.id != 0">Iniciar</button>
-    </form> -->
+<div class="container-fluid" style="background-color: #5191c1; position: absolute;">
+   
+    <div class="resultado" *ngFor="let i of intento">
+         <h1>Prueba de discalculia</h1>
+         <div *ngFor="let a of alumno">
+           <u>Paciente</u>:  {{a.nombre}} {{a.apellido}} <br>
+           <u>Edad cronológica</u>: {{a.edad}} <br>
+            <u>Edad mental</u>: {{a.edad_mental}} <br>
+         </div>
+         <div *ngFor="let r of resultados">
+            <div *ngIf="r.intento == i">
+              <u>Intento N°</u>: {{r.intento}} <br>
+              <u>Fecha de la prueba</u>: {{r.fecha | date: 'dd/MM/yyyy'}} <br>
+            </div>
+         </div><br>
+         <div class="intento" *ngFor="let p of paciente_ejercicio">
+            <div *ngIf="p.intento == i">
+                <div *ngIf="p.ejercicio_id == 1">
+                    <h1><u>Primer actividad</u>: {{ejercicios[0].descripcion}}</h1>
+                    <div class="informacion">
+                      <table class="table table-responsive">
+                        <thead>
+                          <tr>
+                            <th scope="col">Operación 1</th>
+                            <th scope="col">Operación 2</th>
+                            <th scope="col">Operación 3</th>
+                            <th scope="col">Operación 4</th>
+                            <th scope="col">Operación 5</th>
+                          </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                          <tr>
+                            <td>{{p.operacion_1}}</td>
+                            <td>{{p.operacion_2}}</td>
+                            <td>{{p.operacion_3}}</td>
+                            <td>{{p.operacion_4}}</td>
+                            <td>{{p.operacion_5}}</td>   
+                          </tr> 
+                        </tbody>
+                    </table>
+                      <u>Tiempo empleado</u>: {{p.tiempo}} segundos<br>
+                      <u>Porcentaje de respuestas correctas</u>: {{p.porcentaje}}% <br>
+                      <div class="ayuda" *ngIf="p.porcentaje < 50">
+                            <u>Recomendación</u>:<h1 style="color: red;">Se necesita apoyo</h1>
+                      </div>
+                      <div class="ayuda" *ngIf="p.porcentaje >= 50">
+                        <h1 style="color: green;">No se necesita apoyo</h1>
+                  </div>
+                    </div>       
+                </div>
 
+                <div *ngIf="p.ejercicio_id == 2">
+                  <h1><u>Segunda actividad</u>: {{ejercicios[1].descripcion}}</h1>
+                  <div class="informacion">
+                    <table class="table table-responsive">
+                      <thead>
+                        <tr>
+                          <th scope="col">Operación 1</th>
+                          <th scope="col">Operación 2</th>
+                          <th scope="col">Operación 3</th>
+                          <th scope="col">Operación 4</th>
+                          <th scope="col">Operación 5</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-group-divider">
+                        <tr>
+                          <td>{{p.operacion_1}}</td>
+                          <td>{{p.operacion_2}}</td>
+                          <td>{{p.operacion_3}}</td>
+                          <td>{{p.operacion_4}}</td>
+                          <td>{{p.operacion_5}}</td>   
+                        </tr> 
+                      </tbody>
+                  </table>
+                    <u>Tiempo empleado</u>: {{p.tiempo}} segundos<br>
+                    <u>Porcentaje de respuestas correctas</u>: {{p.porcentaje}}% <br>
+                    <div class="ayuda" *ngIf="p.porcentaje < 50">
+                          <u>Recomendación</u>:<h1 style="color: red;">Se necesita apoyo</h1>
+                    </div>
+                    <div class="ayuda" *ngIf="p.porcentaje >= 50">
+                      <h1 style="color: green;">No se necesita apoyo</h1>
+                </div>
+                  </div>       
+              </div>
 
-    <div class="table-responsive">
-        <div *ngFor="let a of alumno">
-            <h1>Paciente: {{a.nombre}} {{a.apellido}}</h1>
-        </div><br>
-        <h1>Resultados detallados: </h1>
-        <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Ejercicio</th>
-                <th scope="col">Operación 1</th>
-                <th scope="col">Operación 2</th>
-                <th scope="col">Operación 3</th>
-                <th scope="col">Operación 4</th>
-                <th scope="col">Operación 5</th>
-                <th scope="col">Porcentaje</th>
-                <th scope="col">Tiempo(segundos)</th>
-              </tr>
-            </thead>
-            <tbody class="table-group-divider">
-              <tr *ngFor="let i of paciente_ejercicio">
-                <td>{{i.ejercicio_id}}</td>
-                <td>{{i.operacion_1}}</td>
-                <td>{{i.operacion_2}}</td>
-                <td>{{i.operacion_3}}</td>
-                <td>{{i.operacion_4}}</td>
-                <td>{{i.operacion_5}}</td>
-                <td>{{i.porcentaje}}%</td>
-                <td>{{i.tiempo}}</td>     
-              </tr> 
-            </tbody>
-        </table>
-    </div>
-    <div class="table-responsive">
-        <h1>Resultados totales: </h1>
+              <div *ngIf="p.ejercicio_id == 3">
+                <h1><u>Tercer actividad</u>: {{ejercicios[2].descripcion}}</h1>
+                <div class="informacion">
+                  <table class="table table-responsive">
+                    <thead>
+                      <tr>
+                        <th scope="col">Operación 1</th>
+                        <th scope="col">Operación 2</th>
+                        <th scope="col">Operación 3</th>
+                        <th scope="col">Operación 4</th>
+                        <th scope="col">Operación 5</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                      <tr>
+                        <td>{{p.operacion_1}}</td>
+                        <td>{{p.operacion_2}}</td>
+                        <td>{{p.operacion_3}}</td>
+                        <td>{{p.operacion_4}}</td>
+                        <td>{{p.operacion_5}}</td>   
+                      </tr> 
+                    </tbody>
+                </table>
+                  <u>Tiempo empleado</u>: {{p.tiempo}} segundos<br>
+                  <u>Porcentaje de respuestas correctas</u>: {{p.porcentaje}}% <br>
+                  <div class="ayuda" *ngIf="p.porcentaje < 50">
+                        <u>Recomendación</u>:<h1 style="color: red;">Se necesita apoyo</h1>
+                  </div>
+                  <div class="ayuda" *ngIf="p.porcentaje >= 50">
+                    <h1 style="color: green;">No se necesita apoyo</h1>
+              </div>
+                </div>       
+            </div>
+            </div>
+         </div><br>
+         <h1><u>Resultados</u>:</h1>
+            <div class="resultado_total" *ngFor="let r of resultados">
+              <div *ngIf="r.intento == i && r.pac_id == paciente_id ">
+                <u>Tiempo total del intento</u>: {{r.tiempo_total}} segundos<br>
+                <u>Porcentaje promedio</u>: {{r.porcentaje_total/3}}% <br>
+              </div>
+          </div>
+    </div> <br>
+    <div class="volver" style="text-align: center; margin-bottom: 5%;">
+      <button class="btn final btn-lg" [routerLink]="['/']">Volver al inicio</button>
     </div>
 </div>

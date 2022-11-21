@@ -35,16 +35,18 @@ export class ConteoComponent implements OnInit {
   continuar: boolean = false;
   correctas: any = [];
   alu_eje: AlumnoEjercicio = emptyAlumnoEjercicio();
-  paciente_ejercicio: AlumnoEjercicio = emptyAlumnoEjercicio();
+  paciente_ejercicio: Array<AlumnoEjercicio> = [];
   tiempo: number = 0;
 
   porcentaje_total: number = 0;
-  tiempo_total: Array<AlumnoEjercicio> = [];
+  tiempo_total: number = 0;
   agregar_resultado: Resultado = emptyResultado();
 
   pipe = new DatePipe('en-US');
   minuto: number = 0;
   segundo: number = 0;
+  paciente_ejercicio_lista: Array<AlumnoEjercicio> = [];
+  intento: number = 0;
 
 
   constructor(private route: ActivatedRoute, private ejercicioService: EjerciciosService) { }
@@ -64,6 +66,16 @@ export class ConteoComponent implements OnInit {
   }, 1000);
 
     this.alumno_id = Number(this.route.snapshot.paramMap.get("id"));
+
+    this.ejercicioService.getEjercicioPaciente(this.alumno_id).subscribe( resp => {
+      this.paciente_ejercicio_lista = resp.rows
+           for(let i of this.paciente_ejercicio_lista){
+                if(i.ejercicio_id == this.ejercicio_id && i.intento > this.intento){
+                      this.intento = i.intento
+                }  
+           }
+    });
+
     this.generarEjercicios();    
     
   }
@@ -219,6 +231,7 @@ export class ConteoComponent implements OnInit {
     this.alu_eje.porcentaje = this.sacarPorcentaje()
     this.alu_eje.tiempo = this.tiempo
     this.alu_eje.realizado = true
+    this.alu_eje.intento = (this.intento+=1)
 
     this.ejercicioService.postAlumnoEjercicio(this.alu_eje).subscribe( resp => {});
 
@@ -230,18 +243,22 @@ obtenerTotales(){
 
   this.agregar_resultado.pac_id = this.alumno_id
   this.agregar_resultado.fecha = this.pipe.transform(Date.now(), 'yyyy/MM/dd');
+  this.agregar_resultado.intento = this.alu_eje.intento
 
   this.ejercicioService.getEjercicioPaciente(this.alumno_id).subscribe( resp => {
     this.paciente_ejercicio = resp.rows
-    
-    /* for(let i of this.paciente_ejercicio){
-      this.tiempo_total += i.tiempo;
-      this.porcentaje_total += i.porcentaje
-    } */
+
+    for(let i of this.paciente_ejercicio){
+      if(i.intento == this.agregar_resultado.intento){
+        this.agregar_resultado.tiempo_total += i.tiempo
+        this.agregar_resultado.porcentaje_total += i.porcentaje
+      }
+    }
+
+    this.ejercicioService.postResultado(this.agregar_resultado).subscribe(resp => {}); 
+    console.log(this.agregar_resultado);
 
 });
-
-  this.ejercicioService.postResultado(this.agregar_resultado).subscribe(resp => {});
 
 }
 
