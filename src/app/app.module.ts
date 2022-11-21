@@ -13,6 +13,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { OperacionesComponent } from './components/operaciones/operaciones.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResultadosComponent } from './components/resultados/resultados.component';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ResultadosComponent } from './components/resultados/resultados.componen
     InicioComponent,
     DashboardComponent,
     OperacionesComponent,
-    ResultadosComponent
+    ResultadosComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

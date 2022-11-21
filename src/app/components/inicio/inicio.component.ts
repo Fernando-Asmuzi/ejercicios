@@ -21,6 +21,7 @@ export class InicioComponent implements OnInit {
   default: number = 0;
   id: number = 0;
   
+  filterPost = '';
   formulario = new FormGroup ({
     id: new FormControl(0)
   })
